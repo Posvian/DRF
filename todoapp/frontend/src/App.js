@@ -6,13 +6,20 @@ import './App.css';
 import UserList from "./components/User";
 import Menu from "./components/menu";
 import Footer from "./components/footer";
+import ProjectList from "./components/Project";
+import TODOList from "./components/todo";
+import NotFound from "./components/NotFound";
+import {Route, BrowserRouter, Switch} from "react-router-dom";
+import NotFound404 from "./components/NotFound";
 
 
 class App extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        'users':[]
+        'users':[],
+        'projects': [],
+        'todo': []
       }
     }
 
@@ -20,7 +27,19 @@ class App extends React.Component {
         axios.get('http://127.0.0.1:8000/api/users/').then(response => {
         this.setState(
             {
-                'users': response.data
+                'users': response.data.results
+        }
+        )}).catch(error => console.log(error))
+      axios.get('http://127.0.0.1:8000/api/projects/').then(response => {
+        this.setState(
+            {
+                'projects': response.data.results
+        }
+        )}).catch(error => console.log(error))
+      axios.get('http://127.0.0.1:8000/api/todo/').then(response => {
+        this.setState(
+            {
+                'todo': response.data.results
         }
         )}).catch(error => console.log(error))
     }
@@ -28,8 +47,16 @@ class App extends React.Component {
     render() {
     return (
         <div>
-            < Menu/>
-            < UserList users={this.state.users}/>
+
+            <BrowserRouter>
+              < Menu/>
+              <Switch>
+              <Route exact path='/' component={() => <UserList users={this.state.users}/>}/>
+              <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects}/>}/>
+              <Route exact path='/todo' component={() => <TODOList todo={this.state.todo}/>}/>
+              <Route component={NotFound404}/>
+              </Switch>
+            </BrowserRouter>
             <Footer/>
         </div>
     );
