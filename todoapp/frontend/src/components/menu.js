@@ -1,9 +1,9 @@
 import React from "react";
 import {Link, BrowserRouter} from "react-router-dom";
+import App from "../App";
 
 
 const Menu = () => {
-
     return (
         <BrowserRouter>
           <ul className="menu">
