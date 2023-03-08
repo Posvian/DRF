@@ -5,7 +5,7 @@ import {Link, BrowserRouter} from "react-router-dom";
 
 const Menu = () => {
     return (
-        <BrowserRouter>
+
           <nav>
             <ul className="menu">
               <li>
@@ -20,7 +20,7 @@ const Menu = () => {
               {/*<li><a href="#">О нас</a></li>*/}
             </ul>
           </nav>
-        </BrowserRouter>
+
     )
 }
 
