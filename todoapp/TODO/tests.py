@@ -44,7 +44,7 @@ class TestProjectViewSetApi(APITestCase):
         project = mixer.blend(Project)
         self.client.login(username=self.name, password=self.password)
         response = self.client.put(f'{self.url}{project.id}/', {'name': 'pr2', 'repo_link': 'posv2@mail.ru',
-                                                                'users':project.users})
+                                                                'users': project.users})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         project = Project.objects.get(id=project.id)
         self.assertEqual(project.name, 'pr2')
