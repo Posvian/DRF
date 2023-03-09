@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework.permissions import AllowAny
+
 from rest_framework.routers import DefaultRouter
 from users.views import UserCustomViewSet
 from TODO.views import ProjectCustomDjangoFilterViewSet, TODODjangoFilterModelViewSet
@@ -27,11 +31,26 @@ router.register('users', UserCustomViewSet)
 router.register('projects', ProjectCustomDjangoFilterViewSet)
 router.register('todo', TODODjangoFilterModelViewSet)
 
+schema_view = get_schema_view(
+    openapi.Info(
+        title='Todoapp',
+        default_version='v2',
+        description='Documentation for our project',
+        contact=openapi.Contact(email='posvianski@mail.ru'),
+        license=openapi.License(name='test')
+    ),
+    public=True,
+    # permission_classes=(AllowAny,)
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
     path('api-token-auth/', views.obtain_auth_token),
+    path('swagger/', schema_view.with_ui('swagger')),
+    path('redoc/', schema_view.with_ui('redoc')),
+    path('swagger/<str:format>/', schema_view.without_ui()),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
