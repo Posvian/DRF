@@ -19,6 +19,7 @@ from django.urls import include
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework.permissions import AllowAny
+from graphene_django.views import GraphQLView
 
 from rest_framework.routers import DefaultRouter
 from users.views import UserCustomViewSet
@@ -51,6 +52,7 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger')),
     path('redoc/', schema_view.with_ui('redoc')),
     path('swagger/<str:format>/', schema_view.without_ui()),
+    path('graphql/', GraphQLView.as_view(graphiql=True)),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
