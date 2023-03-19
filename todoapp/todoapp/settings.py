@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
     'rest_framework',
     'corsheaders',
     'users',
@@ -160,4 +161,8 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
     # from rest_framework.versioning import AcceptHeaderVersioning
+}
+
+GRAPHENE = {
+    'SCHEMA': 'todoapp.schema.schema'
 }
