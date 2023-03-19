@@ -1,39 +1,47 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 
 
-const ProjectItem = ({project}) => {
+const ProjectItem = ({project, deleteProject}) => {
 
     return(
         <tr>
             <td>
-                {project.name}
+              {project.name}
             </td>
             <td>
-                {project.repo_link}
+              {project.repo_link}
             </td>
             <td>
-                {project.users}
+              {project.users}
+            </td>
+            <td>
+              <button onClick={()=>deleteProject(project.id)} type='button'>Delete</button>
             </td>
         </tr>
     )
 }
 
-const ProjectList = ({projects}) => {
+const ProjectList = ({projects, deleteProject}) => {
 
     return(
-        <table>
-            <th>
-                Project name
-            </th>
-            <th>
-                Link on repository
-            </th>
-            <th>
-                Users
-            </th>
-            {projects.map((project) => <ProjectItem project={project}/>)}
-        </table>
+        <div>
+          <table>
+              <th>
+                  Project name
+              </th>
+              <th>
+                  Link on repository
+              </th>
+              <th>
+                  Users
+              </th>
+
+              {projects.map((project) => <ProjectItem project={project} deleteProject={deleteProject}/>)}
+          </table>
+          <Link to='/projects/create'>Create</Link>
+        </div>
     )
 
 }
